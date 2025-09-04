@@ -42,6 +42,8 @@ public class HeapSort {
 
     /**
     * In-place sort given array `items`.
+    *
+    * @param items - array to sort.
     */
     public static void sort(int[] items) {
         heapify(items);

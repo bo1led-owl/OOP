@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
-public class HeapSortTest {
+class HeapSortTest {
     private static boolean isSorted(int[] arr) {
         for (int i = 0; i < arr.length - 1; ++i) {
             if (arr[i] > arr[i + 1]) {
@@ -16,7 +16,7 @@ public class HeapSortTest {
     }
 
     @Test
-    public void testSort() {
+    void testSort() {
         int[] array = new int[] {3, 1, 5, 4, 2};
         HeapSort.sort(array);
 
