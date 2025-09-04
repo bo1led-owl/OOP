@@ -1,5 +1,8 @@
 package sys.pro;
 
+/**
+* Class implementing heapsort algorithm.
+*/
 public class HeapSort {
     private static int parentIndex(int i) {
         return (i + 1) / 2 - 1;
@@ -37,6 +40,9 @@ public class HeapSort {
         }
     }
 
+    /**
+    * In-place sort given array `items`.
+    */
     public static void sort(int[] items) {
         heapify(items);
 
