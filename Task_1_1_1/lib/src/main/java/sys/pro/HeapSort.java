@@ -44,7 +44,9 @@ public interface HeapSort {
      * @param items - array to sort.
      */
     public static void sort(int[] items) {
-        if (items == null || items.length == 0) return;
+        if (items == null || items.length == 0) {
+            return;
+        }
 
         heapify(items);
 
@@ -54,10 +56,11 @@ public interface HeapSort {
         }
     }
 
-    /** Demo usage of `HeapSort.sort`.
-    *
-    * @param args - command line arguments, unused in the implementation.
-    */
+    /**
+     * Demo usage of `HeapSort.sort`.
+     *
+     * @param args - command line arguments, unused in the implementation.
+     */
     public static void main(String[] args) {
         int[] array = new int[] {3, 1, 5, 4, 2};
         HeapSort.sort(array);
