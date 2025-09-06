@@ -1,9 +1,7 @@
 package sys.pro;
 
-/**
-* Class implementing heapsort algorithm.
-*/
-public class HeapSort {
+/** Class implementing heapsort algorithm. */
+public interface HeapSort {
     private static int parentIndex(int i) {
         return (i + 1) / 2 - 1;
     }
@@ -41,16 +39,31 @@ public class HeapSort {
     }
 
     /**
-    * In-place sort given array `items`.
-    *
-    * @param items - array to sort.
-    */
+     * In-place sort given array `items`.
+     *
+     * @param items - array to sort.
+     */
     public static void sort(int[] items) {
+        if (items == null || items.length == 0) return;
+
         heapify(items);
 
         for (int i = items.length - 1; i > 0; --i) {
             swap(items, 0, i);
             siftDown(items, 0, i);
         }
+    }
+
+    /** Demo usage of `HeapSort.sort`.
+    *
+    * @param args - command line arguments, unused in the implementation.
+    */
+    public static void main(String[] args) {
+        int[] array = new int[] {3, 1, 5, 4, 2};
+        HeapSort.sort(array);
+        for (int x : array) {
+            System.out.printf("%d ", x);
+        }
+        System.out.println();
     }
 }
