@@ -1,11 +1,9 @@
 package sys.pro;
 
-/** Class implementing heapsort algorithm. */
-public interface HeapSort {
-    private static int parentIndex(int i) {
-        return (i + 1) / 2 - 1;
-    }
+import java.util.Arrays;
 
+/** Implementation of heapsort algorithm. */
+public interface HeapSort {
     private static int leftChildIndex(int i) {
         return (i + 1) * 2 - 1;
     }
@@ -64,9 +62,6 @@ public interface HeapSort {
     public static void main(String[] args) {
         int[] array = new int[] {3, 1, 5, 4, 2};
         HeapSort.sort(array);
-        for (int x : array) {
-            System.out.printf("%d ", x);
-        }
-        System.out.println();
+        System.out.println(Arrays.toString(array));
     }
 }
