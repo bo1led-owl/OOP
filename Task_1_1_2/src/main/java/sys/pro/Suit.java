@@ -18,8 +18,6 @@ public enum Suit {
                 return "clubs";
             case Diamonds:
                 return "diamonds";
-            case null:
-                throw new NullPointerException();
         }
     }
 }
