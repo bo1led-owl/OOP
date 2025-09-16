@@ -18,6 +18,8 @@ public enum Suit {
                 return "clubs";
             case Diamonds:
                 return "diamonds";
+            default:
+                return null;
         }
     }
 }
