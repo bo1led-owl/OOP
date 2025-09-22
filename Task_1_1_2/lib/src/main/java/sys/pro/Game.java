@@ -3,9 +3,13 @@ package sys.pro;
 import java.io.IOException;
 import java.util.Scanner;
 
+/** Blackjack implementation. */
 public class Game {
+  private static final int SCORE_LIMIT = 21;
+  private static final int DEALER_TARGET_SCORE = 17;
+
   public static void main(String[] args) throws IOException {
-    ResettingDeck deck = new ResettingDeck();
+    ResettingDeck deck = new ResettingDeck<DefaultDeck>(DefaultDeck::new);
     int roundsWonByPlayer = 0;
     int totalRounds = 0;
     Scanner scanner = new Scanner(System.in);
@@ -38,6 +42,7 @@ public class Game {
     }
   }
 
+  /** Simulate a round of the game. */
   public static GameResult round(Scanner input, ResettingDeck deck) throws IOException {
     Hand dealerHand = new Hand();
     Hand playerHand = new Hand();
@@ -74,7 +79,7 @@ public class Game {
 
       printHands(playerHand, dealerHand);
 
-      if (playerHand.chips() > 21) {
+      if (playerHand.chips() > SCORE_LIMIT) {
         return GameResult.PlayerLost;
       }
     }
@@ -87,14 +92,14 @@ public class Game {
       return GameResult.PlayerLost;
     }
 
-    while (dealerHand.chips() < 17) {
+    while (dealerHand.chips() < DEALER_TARGET_SCORE) {
       Card card = deck.nextCard();
       System.out.println("Dealer got " + card + ".");
 
       dealerHand.addCard(card);
       printHands(playerHand, dealerHand);
 
-      if (dealerHand.chips() > 21) {
+      if (dealerHand.chips() > SCORE_LIMIT) {
         return GameResult.PlayerWon;
       }
     }

@@ -2,21 +2,27 @@ package sys.pro;
 
 import java.util.ArrayList;
 
+/** Player's hand, a collection of cards. */
 public class Hand {
+  private static final int SCORE_LIMIT = 21;
+  
   private ArrayList<Card> cards;
 
   public Hand() {
     cards = new ArrayList<>();
   }
 
+  /** Add a card to hand. */
   public void addCard(Card card) {
     cards.add(card);
   }
 
+  /** Get i'th card from the hand. */
   public Card get(int i) {
     return cards.get(i);
   }
 
+  /** Calculate the chips of the combination held. */
   public int chips() {
     int scoreWithoutAces = cards
         .stream()
@@ -32,7 +38,7 @@ public class Hand {
     for (int lowAces = 0; lowAces <= amountOfAces; ++lowAces) {
       int highAces = amountOfAces - lowAces;
       int score = scoreWithoutAces + highAces * 11 + lowAces;
-      if (score <= 21) {
+      if (score <= SCORE_LIMIT) {
         return score;
       }
     }
@@ -40,6 +46,7 @@ public class Hand {
     return scoreWithoutAces + amountOfAces;
   }
 
+  /** Check whether the hand contains a blackjack. */
   public boolean containsBlackjack() {
     return cards.stream().anyMatch(c -> c.chips() == 11)
         && cards.stream().anyMatch(c -> c.chips() == 10);

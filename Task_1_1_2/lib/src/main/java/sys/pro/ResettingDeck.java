@@ -1,18 +1,23 @@
 package sys.pro;
 
-public class ResettingDeck {
-  private Deck deck;
+import java.util.function.Supplier;
 
-  public ResettingDeck() {
-    deck = new Deck();
+public class ResettingDeck<D extends Deck> implements Deck {
+  private Supplier<D> supplier;
+  private D deck;
+
+  public ResettingDeck(Supplier<D> supplier) {
+    this.supplier = supplier;
+    deck = this.supplier.get();
   }
 
   public Card nextCard() {
     Card res = deck.nextCard();
     if (res == null) {
-      deck = new Deck();
+      deck = supplier.get();
+      res = deck.nextCard();
     }
 
-    return deck.nextCard();
+    return res;
   }
 }
