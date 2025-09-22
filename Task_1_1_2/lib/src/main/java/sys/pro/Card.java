@@ -25,17 +25,17 @@ public class Card {
 
     /** Get card's suit. */
     public Suit suit() {
-      return suit;
+        return suit;
     }
 
     /** Get card's rank. */
     public Rank rank() {
-      return rank;
+        return rank;
     }
 
     /** Get chips for the card. */
     public int chips() {
-      return rank.chips;
+        return rank.chips;
     }
 
     @Override

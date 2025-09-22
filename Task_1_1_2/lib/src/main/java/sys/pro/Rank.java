@@ -15,7 +15,7 @@ public enum Rank {
     Queen(10, "Queen"),
     King(10, "Kind"),
     Ace(11, "Ace");
-    
+
     public final int chips;
     public final String name;
 

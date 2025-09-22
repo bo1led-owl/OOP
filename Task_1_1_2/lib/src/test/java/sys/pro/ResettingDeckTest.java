@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.function.Supplier;
 import java.util.ArrayList;
 
 class ResettingDeckTest {

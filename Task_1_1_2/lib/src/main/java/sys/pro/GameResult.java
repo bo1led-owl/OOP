@@ -1,7 +1,7 @@
 package sys.pro;
 
 public enum GameResult {
-  PlayerWon,
-  PlayerLost,
-  Draw,
+    PlayerWon,
+    PlayerLost,
+    Draw,
 }
