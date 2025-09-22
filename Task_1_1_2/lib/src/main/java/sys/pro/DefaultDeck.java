@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Random;
 import java.util.stream.Stream;
 
+/** Default, 52 cards, randomized deck. */
 public class DefaultDeck implements Deck {
     private ArrayList<Card> cards;
     private Random random;

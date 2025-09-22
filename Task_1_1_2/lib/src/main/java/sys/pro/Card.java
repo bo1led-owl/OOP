@@ -6,6 +6,7 @@ public class Card {
     private Rank rank;
     private boolean faceUp;
 
+    /** Create a new card. */
     public Card(Suit suit, Rank rank) {
         this.suit = suit;
         this.rank = rank;

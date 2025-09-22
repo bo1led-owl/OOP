@@ -8,13 +8,14 @@ public class Game {
     private static final int SCORE_LIMIT = 21;
     private static final int DEALER_TARGET_SCORE = 17;
 
-    public static void main(String[] args) throws IOException {
+    /** Interactive blackjack. */
+    public static void main(String[] args) throws IOException, NullPointerException {
         ResettingDeck deck = new ResettingDeck<DefaultDeck>(DefaultDeck::new);
         int roundsWonByPlayer = 0;
         int totalRounds = 0;
         Scanner scanner = new Scanner(System.in);
 
-        for (; ; ) {
+        while (true) {
             totalRounds += 1;
             System.out.println("Round " + totalRounds);
             GameResult result = round(scanner, deck);
@@ -30,6 +31,8 @@ public class Game {
                 case Draw:
                     System.out.print("Draw. ");
                     break;
+                default:
+                    throw new NullPointerException();
             }
 
             int roundsWonByDealer = totalRounds - roundsWonByPlayer;
