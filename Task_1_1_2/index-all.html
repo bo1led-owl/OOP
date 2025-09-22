@@ -102,7 +102,9 @@ loadScripts(document, 'script');</script>
 <div class="block">Default, 52 cards, randomized deck.</div>
 </dd>
 <dt><a href="sys/pro/DefaultDeck.html#%3Cinit%3E()" class="member-name-link">DefaultDeck()</a> - Constructor for class sys.pro.<a href="sys/pro/DefaultDeck.html" title="class in sys.pro">DefaultDeck</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Create a new deck.</div>
+</dd>
 <dt><a href="sys/pro/Suit.html#Diamonds" class="member-name-link">Diamonds</a> - Enum constant in enum class sys.pro.<a href="sys/pro/Suit.html" title="enum class in sys.pro">Suit</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="sys/pro/GameResult.html#Draw" class="member-name-link">Draw</a> - Enum constant in enum class sys.pro.<a href="sys/pro/GameResult.html" title="enum class in sys.pro">GameResult</a></dt>
@@ -195,9 +197,13 @@ loadScripts(document, 'script');</script>
 <div class="block">Extract a card from the deck.</div>
 </dd>
 <dt><a href="sys/pro/DefaultDeck.html#nextCard()" class="member-name-link">nextCard()</a> - Method in class sys.pro.<a href="sys/pro/DefaultDeck.html" title="class in sys.pro">DefaultDeck</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Get next random card from the remaining cards in the deck.</div>
+</dd>
 <dt><a href="sys/pro/ResettingDeck.html#nextCard()" class="member-name-link">nextCard()</a> - Method in class sys.pro.<a href="sys/pro/ResettingDeck.html" title="class in sys.pro">ResettingDeck</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Get next card, reset if the underlying deck returns `null`.</div>
+</dd>
 <dt><a href="sys/pro/Rank.html#Nine" class="member-name-link">Nine</a> - Enum constant in enum class sys.pro.<a href="sys/pro/Rank.html" title="enum class in sys.pro">Rank</a></dt>
 <dd>&nbsp;</dd>
 </dl>
@@ -224,9 +230,13 @@ loadScripts(document, 'script');</script>
 <div class="block">Card's rank.</div>
 </dd>
 <dt><a href="sys/pro/ResettingDeck.html" class="type-name-link" title="class in sys.pro">ResettingDeck</a>&lt;<a href="sys/pro/ResettingDeck.html" title="type parameter in ResettingDeck">D</a> extends <a href="sys/pro/Deck.html" title="interface in sys.pro">Deck</a>&gt; - Class in <a href="sys/pro/package-summary.html">sys.pro</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Deck that takes cards from decks given by the passed supplier.</div>
+</dd>
 <dt><a href="sys/pro/ResettingDeck.html#%3Cinit%3E(java.util.function.Supplier)" class="member-name-link">ResettingDeck(Supplier&lt;D&gt;)</a> - Constructor for class sys.pro.<a href="sys/pro/ResettingDeck.html" title="class in sys.pro">ResettingDeck</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Create a new repeating deck.</div>
+</dd>
 <dt><a href="sys/pro/Game.html#round(java.util.Scanner,sys.pro.ResettingDeck)" class="member-name-link">round(Scanner, ResettingDeck)</a> - Static method in class sys.pro.<a href="sys/pro/Game.html" title="class in sys.pro">Game</a></dt>
 <dd>
 <div class="block">Simulate a round of the game.</div>

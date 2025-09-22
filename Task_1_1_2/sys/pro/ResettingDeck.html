@@ -81,6 +81,7 @@ loadScripts(document, 'script');</script>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">ResettingDeck&lt;D extends <a href="Deck.html" title="interface in sys.pro">Deck</a>&gt;</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>
 implements <a href="Deck.html" title="interface in sys.pro">Deck</a></span></div>
+<div class="block">Deck that takes cards from decks given by the passed supplier.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -93,7 +94,9 @@ implements <a href="Deck.html" title="interface in sys.pro">Deck</a></span></div
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.util.function.Supplier)" class="member-name-link">ResettingDeck</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Supplier.html" title="class or interface in java.util.function" class="external-link">Supplier</a>&lt;<a href="ResettingDeck.html" title="type parameter in ResettingDeck">D</a>&gt;&nbsp;supplier)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Create a new repeating deck.</div>
+</div>
 </div>
 </section>
 </li>
@@ -111,7 +114,7 @@ implements <a href="Deck.html" title="interface in sys.pro">Deck</a></span></div
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="Card.html" title="class in sys.pro">Card</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#nextCard()" class="member-name-link">nextCard</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Extract a card from the deck.</div>
+<div class="block">Get next card, reset if the underlying deck returns `null`.</div>
 </div>
 </div>
 </div>
@@ -134,6 +137,7 @@ implements <a href="Deck.html" title="interface in sys.pro">Deck</a></span></div
 <section class="detail" id="&lt;init&gt;(java.util.function.Supplier)">
 <h3>ResettingDeck</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">ResettingDeck</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Supplier.html" title="class or interface in java.util.function" class="external-link">Supplier</a>&lt;<a href="ResettingDeck.html" title="type parameter in ResettingDeck">D</a>&gt;&nbsp;supplier)</span></div>
+<div class="block">Create a new repeating deck.</div>
 </section>
 </li>
 </ul>
@@ -148,8 +152,7 @@ implements <a href="Deck.html" title="interface in sys.pro">Deck</a></span></div
 <section class="detail" id="nextCard()">
 <h3>nextCard</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="Card.html" title="class in sys.pro">Card</a></span>&nbsp;<span class="element-name">nextCard</span>()</div>
-<div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="Deck.html#nextCard()">Deck</a></code></span></div>
-<div class="block">Extract a card from the deck.</div>
+<div class="block">Get next card, reset if the underlying deck returns `null`.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="Deck.html#nextCard()">nextCard</a></code>&nbsp;in interface&nbsp;<code><a href="Deck.html" title="interface in sys.pro">Deck</a></code></dd>
