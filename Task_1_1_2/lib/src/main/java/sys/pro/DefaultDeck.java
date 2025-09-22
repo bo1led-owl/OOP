@@ -15,6 +15,7 @@ public class DefaultDeck implements Deck {
         return Arrays.stream(suits).map(s -> new Card(s, r));
     }
 
+    /** Create a new deck. */
     public DefaultDeck() {
         cards = new ArrayList<>();
 
@@ -25,6 +26,7 @@ public class DefaultDeck implements Deck {
         random = new Random(System.currentTimeMillis());
     }
 
+    /** Get next random card from the remaining cards in the deck. */
     public Card nextCard() {
         if (cards.isEmpty()) {
             return null;

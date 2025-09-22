@@ -2,11 +2,11 @@ package sys.pro;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.junit.jupiter.api.Test;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import org.junit.jupiter.api.Test;
 
 class GameTest {
     @Test
