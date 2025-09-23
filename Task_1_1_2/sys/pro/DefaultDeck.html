@@ -97,6 +97,10 @@ implements <a href="Deck.html" title="interface in sys.pro">Deck</a></span></div
 <div class="col-last even-row-color">
 <div class="block">Create a new deck.</div>
 </div>
+<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(java.util.Random)" class="member-name-link">DefaultDeck</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Random.html" title="class or interface in java.util" class="external-link">Random</a>&nbsp;random)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Create a new deck with provided `Random`.</div>
+</div>
 </div>
 </section>
 </li>
@@ -114,7 +118,7 @@ implements <a href="Deck.html" title="interface in sys.pro">Deck</a></span></div
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="Card.html" title="class in sys.pro">Card</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#nextCard()" class="member-name-link">nextCard</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Get next random card from the remaining cards in the deck.</div>
+<div class="block">Get next random card from the remaining cards in the deck or `null` if deck is empty.</div>
 </div>
 </div>
 </div>
@@ -140,6 +144,13 @@ implements <a href="Deck.html" title="interface in sys.pro">Deck</a></span></div
 <div class="block">Create a new deck.</div>
 </section>
 </li>
+<li>
+<section class="detail" id="&lt;init&gt;(java.util.Random)">
+<h3>DefaultDeck</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">DefaultDeck</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Random.html" title="class or interface in java.util" class="external-link">Random</a>&nbsp;random)</span></div>
+<div class="block">Create a new deck with provided `Random`.</div>
+</section>
+</li>
 </ul>
 </section>
 </li>
@@ -152,7 +163,7 @@ implements <a href="Deck.html" title="interface in sys.pro">Deck</a></span></div
 <section class="detail" id="nextCard()">
 <h3>nextCard</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="Card.html" title="class in sys.pro">Card</a></span>&nbsp;<span class="element-name">nextCard</span>()</div>
-<div class="block">Get next random card from the remaining cards in the deck.</div>
+<div class="block">Get next random card from the remaining cards in the deck or `null` if deck is empty.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="Deck.html#nextCard()">nextCard</a></code>&nbsp;in interface&nbsp;<code><a href="Deck.html" title="interface in sys.pro">Deck</a></code></dd>
