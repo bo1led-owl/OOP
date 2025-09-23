@@ -13,7 +13,7 @@ public class Reader<R, A> {
     }
 
     private Reader(A x) {
-        fn = (_ -> x);
+        fn = (ctx -> x);
     }
 
     /** Create `Reader` with constant expression. */
