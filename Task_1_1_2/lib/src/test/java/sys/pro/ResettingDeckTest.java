@@ -1,10 +1,11 @@
 package sys.pro;
 
-import java.util.ArrayList;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
 
 class ResettingDeckTest {
     @Test

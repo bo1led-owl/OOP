@@ -17,16 +17,21 @@ public class DefaultDeck implements Deck {
 
     /** Create a new deck. */
     public DefaultDeck() {
+        this(new Random(System.currentTimeMillis()));
+    }
+
+    /** Create a new deck with provided `Random`. */
+    public DefaultDeck(Random random) {
         cards = new ArrayList<>();
 
         for (Rank rank : Rank.values()) {
             cardsWithRank(rank).forEach(c -> cards.add(c));
         }
 
-        random = new Random(System.currentTimeMillis());
+        this.random = random;
     }
 
-    /** Get next random card from the remaining cards in the deck. */
+    /** Get next random card from the remaining cards in the deck or `null` if deck is empty. */
     public Card nextCard() {
         if (cards.isEmpty()) {
             return null;

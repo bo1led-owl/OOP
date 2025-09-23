@@ -1,15 +1,15 @@
 package sys.pro;
 
-import java.io.IOException;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.Test;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import org.junit.jupiter.api.Test;
-
 class GameTest {
     @Test
-    void simple() throws IOException {
+    void simple() {
         Scanner input = new Scanner("stand\n");
 
         ArrayList<Card> cards = new ArrayList<Card>();
@@ -24,7 +24,7 @@ class GameTest {
     }
 
     @Test
-    void hits() throws IOException {
+    void hits() {
         Scanner input = new Scanner("hit\nhit\nstand\n");
 
         ArrayList<Card> cards = new ArrayList<Card>();
@@ -46,7 +46,7 @@ class GameTest {
     }
 
     @Test
-    void playerGotTooMuch() throws IOException {
+    void playerGotTooMuch() {
         Scanner input = new Scanner("hit\n");
 
         ArrayList<Card> cards = new ArrayList<Card>();
@@ -65,7 +65,7 @@ class GameTest {
     }
 
     @Test
-    void dealerGotTooMuch() throws IOException {
+    void dealerGotTooMuch() {
         Scanner input = new Scanner("stand\n");
 
         ArrayList<Card> cards = new ArrayList<Card>();
@@ -85,7 +85,7 @@ class GameTest {
     }
 
     @Test
-    void blackjack() throws IOException {
+    void blackjack() {
         Scanner input = new Scanner("");
 
         ArrayList<Card> cards = new ArrayList<Card>();

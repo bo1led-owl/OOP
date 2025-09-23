@@ -1,6 +1,5 @@
 package sys.pro;
 
-import java.io.IOException;
 import java.util.Scanner;
 
 /** Blackjack implementation. */
@@ -9,7 +8,7 @@ public class Game {
     private static final int DEALER_TARGET_SCORE = 17;
 
     /** Interactive blackjack. */
-    public static void main(String[] args) throws IOException, NullPointerException {
+    public static void main(String[] args) {
         ResettingDeck deck = new ResettingDeck<DefaultDeck>(DefaultDeck::new);
         int roundsWonByPlayer = 0;
         int totalRounds = 0;
@@ -46,7 +45,7 @@ public class Game {
     }
 
     /** Simulate a round of the game. */
-    public static GameResult round(Scanner input, ResettingDeck deck) throws IOException {
+    public static GameResult round(Scanner input, ResettingDeck deck) {
         Hand dealerHand = new Hand();
         Hand playerHand = new Hand();
 

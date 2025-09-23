@@ -11,7 +11,7 @@ public class CustomDeck implements Deck {
         this.cards = cards;
     }
 
-    /** Get next card. */
+    /** Get next card or `null` if deck is empty. */
     public Card nextCard() {
         if (idx >= cards.size()) {
             return null;
