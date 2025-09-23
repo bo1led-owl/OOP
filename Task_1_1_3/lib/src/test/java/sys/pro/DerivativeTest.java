@@ -4,8 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.HashMap;
-
 class DerivativeTest {
     @Test
     void number() {
@@ -40,41 +38,21 @@ class DerivativeTest {
     void mul() {
         var v = new Mul(new Number(4), new Variable("x"));
         assertEquals(
-            new Add(
-                new Mul(
-                    new Number(0),
-                    new Variable("x")
-                ),
-                new Mul(
-                    new Number(4),
-                    new Number(1)
-                )
-            ),
-            v.derivative("x")
-        );
+                new Add(
+                        new Mul(new Number(0), new Variable("x")),
+                        new Mul(new Number(4), new Number(1))),
+                v.derivative("x"));
     }
 
     @Test
     void div() {
         var v = new Div(new Number(4), new Variable("x"));
         assertEquals(
-            new Div(
-                new Sub(
-                    new Mul(
-                        new Number(0),
-                        new Variable("x")
-                    ),
-                    new Mul(
-                        new Number(4),
-                        new Number(1)
-                    )
-                ),
-                new Mul(
-                    new Variable("x"),
-                    new Variable("x")
-                )
-            ),
-            v.derivative("x")
-        );
+                new Div(
+                        new Sub(
+                                new Mul(new Number(0), new Variable("x")),
+                                new Mul(new Number(4), new Number(1))),
+                        new Mul(new Variable("x"), new Variable("x"))),
+                v.derivative("x"));
     }
 }

@@ -4,40 +4,40 @@ import java.util.HashMap;
 
 /** Integer immediate. */
 public class Number implements Expression {
-  public final Integer value;
-  
-  /** Create new immediate. */
-  public Number(Integer value) {
-    this.value = value;
-  }
+    public final Integer value;
 
-  @Override
-  public Reader<HashMap<String, Integer>, Integer> eval() {
-    return Reader.pure(value);
-  }
+    /** Create new immediate. */
+    public Number(Integer value) {
+        this.value = value;
+    }
 
-  @Override
-  public Expression derivative(String variable) {
-    return new Number(0);
-  }
+    @Override
+    public Reader<HashMap<String, Integer>, Integer> eval() {
+        return Reader.pure(value);
+    }
 
-  @Override
-  public boolean equals(Object that) {
-    return that instanceof Number && value.equals(((Number)that).value);
-  }
+    @Override
+    public Expression derivative(String variable) {
+        return new Number(0);
+    }
 
-  @Override
-  public String toString() {
-    return value.toString();
-  }
+    @Override
+    public boolean equals(Object that) {
+        return that instanceof Number && value.equals(((Number) that).value);
+    }
 
-  @Override
-  public Expression simplify() {
-    return this;
-  }
+    @Override
+    public String toString() {
+        return value.toString();
+    }
 
-  @Override
-  public boolean containsVariables() {
-    return false;
-  }
+    @Override
+    public Expression simplify() {
+        return this;
+    }
+
+    @Override
+    public boolean containsVariables() {
+        return false;
+    }
 }

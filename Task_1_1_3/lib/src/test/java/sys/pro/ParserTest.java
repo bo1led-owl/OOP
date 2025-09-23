@@ -8,7 +8,7 @@ class ParserTest {
     private static Expression parse(String input) {
         return (new Parser(input)).parse();
     }
-    
+
     @Test
     void number() {
         assertEquals(new Number(1), parse("1"));
@@ -50,24 +50,10 @@ class ParserTest {
     @Test
     void combinations() {
         assertEquals(
-            new Add(
-                new Mul(
-                    new Number(42),
-                    new Number(3)
-                ),
-                new Variable("x")
-            ),
-            parse("42 * 3 + x")
-        );
+                new Add(new Mul(new Number(42), new Number(3)), new Variable("x")),
+                parse("42 * 3 + x"));
         assertEquals(
-            new Mul(
-                new Number(42),
-                new Sub(
-                    new Number(3),
-                    new Variable("x")
-                )
-            ),
-            parse("42 * (3 - x)")
-        );
+                new Mul(new Number(42), new Sub(new Number(3), new Variable("x"))),
+                parse("42 * (3 - x)"));
     }
 }

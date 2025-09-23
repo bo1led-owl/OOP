@@ -7,10 +7,10 @@ import org.junit.jupiter.api.Test;
 import java.util.HashMap;
 
 class EvalTest {
-    static private HashMap<String, Integer> testCtx() {
+    private static HashMap<String, Integer> testCtx() {
         return Expression.parseCtx("x = 10; y = 13; z = 42");
     }
-    
+
     @Test
     void number() {
         assertEquals(4, new Number(4).eval().run(testCtx()));
