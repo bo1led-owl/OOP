@@ -48,14 +48,17 @@ public class Parser {
         return res;
     }
 
-    /** Create new parser from given string. */
-    public Parser(String input) {
+    /** Parse an expression. */
+    public static Expression parse(String input) {
+        return (new Parser(input)).parse();
+    }
+
+    private Parser(String input) {
         tokens = tokenize(input).iterator();
         advance();
     }
 
-    /** Perform parsing. */
-    public Expression parse() {
+    private Expression parse() {
         return parseBin(0, parseTerm());
     }
 

@@ -18,6 +18,11 @@ public interface Expression {
     /** Evaluate this expression. */
     public Reader<HashMap<String, Integer>, Integer> eval();
 
+    /** Evaluate this expression with directly passed context. */
+    public default Integer eval(String ctx) {
+        return eval().run(parseCtx(ctx));
+    }
+
     /** Calculate the derivative of this expression. */
     public Expression derivative(String variable);
 
