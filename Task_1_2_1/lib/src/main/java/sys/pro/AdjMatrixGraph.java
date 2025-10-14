@@ -6,13 +6,15 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-class AdjMatrixGraph implements Graph {
+/** Adjacency matrix implementation of a graph. */
+public class AdjMatrixGraph implements Graph {
     private HashMap<Integer, HashSet<Integer>> repr;
 
     private AdjMatrixGraph(AdjMatrixGraph g) {
         repr = new HashMap<Integer, HashSet<Integer>>(g.repr);
     }
 
+    /** Create an empty graph. */
     public AdjMatrixGraph() {
         repr = new HashMap<Integer, HashSet<Integer>>();
     }

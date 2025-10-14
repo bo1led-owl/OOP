@@ -6,7 +6,8 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
-class IncidenceMatrixGraph implements Graph {
+/** Incidence matrix implementation of a graph. */
+public class IncidenceMatrixGraph implements Graph {
     // `boolean` is `true` iff an edge is going **from** a vertex
     private HashMap<Integer, HashMap<Edge, Boolean>> repr;
 
@@ -14,6 +15,7 @@ class IncidenceMatrixGraph implements Graph {
         repr = new HashMap<Integer, HashMap<Edge, Boolean>>(g.repr);
     }
 
+    /** Create an empty graph. */
     public IncidenceMatrixGraph() {
         repr = new HashMap<Integer, HashMap<Edge, Boolean>>();
     }
@@ -77,6 +79,12 @@ class IncidenceMatrixGraph implements Graph {
     @Override
     public boolean equals(Object that) {
         return eq(that);
+    }
+
+    @Override
+    public boolean hasAnIncomingEdge(Integer target) {
+        HashMap<Edge, Boolean> edges = repr.get(target);
+        return edges.values().stream().anyMatch(b -> !b);
     }
 
     @Override

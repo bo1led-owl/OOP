@@ -1,9 +1,19 @@
 package sys.pro;
 
-class Edge {
+/** Edge in a graph. */
+public class Edge {
+    /** Node that this edge is coming from. */
     public final Integer from;
+
+    /** Node that this edge is coming to. */
     public final Integer to;
 
+    /**
+     * Create a new edge.
+     *
+     * @param from - source node.
+     * @param to - destination node.
+     */
     public Edge(Integer from, Integer to) {
         this.from = from;
         this.to = to;

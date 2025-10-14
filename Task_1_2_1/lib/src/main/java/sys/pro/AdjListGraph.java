@@ -5,13 +5,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-class AdjListGraph implements Graph {
+/** Adjacency list implementation of a graph. */
+public class AdjListGraph implements Graph {
     private HashMap<Integer, ArrayList<Integer>> repr;
 
     private AdjListGraph(AdjListGraph g) {
         repr = new HashMap<Integer, ArrayList<Integer>>(g.repr);
     }
 
+    /** Create an empty graph. */
     public AdjListGraph() {
         repr = new HashMap<Integer, ArrayList<Integer>>();
     }

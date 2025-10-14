@@ -7,7 +7,16 @@ import java.util.Set;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
-interface Graph {
+/** Interface for graph operations. */
+public interface Graph {
+    /**
+     * Parse a graph from string.
+     *
+     * @param <G> - target graph type.
+     * @param supp - a supplier for graph type to parse.
+     * @param input - input string.
+     * @return parsed graph.
+     */
     static <G extends Graph> Graph fromString(Supplier<G> supp, String input) {
         G res = supp.get();
 
@@ -26,20 +35,62 @@ interface Graph {
         return res;
     }
 
+    /**
+     * Create a deep copy of this graph.
+     *
+     * @return the copied graph.
+     */
     Graph deepCopy();
 
+    /**
+     * Add a new node to the graph.
+     *
+     * @param i - node index
+     */
     void addNode(Integer i);
 
+    /**
+     * Remove a node from the graph.
+     *
+     * @param i - node to remove.
+     */
     void removeNode(Integer i);
 
+    /**
+     * Add an edge to the graph. Throws `NoSuchElementException` if either source or destination
+     * node was not in the graph.
+     *
+     * @param e - edge to add.
+     */
     void addEdge(Edge e);
 
+    /**
+     * Remove an edge from the graph.
+     *
+     * @param e - edge to remove
+     */
     void removeEdge(Edge e);
 
+    /**
+     * Get a list of all nodes of a graph.
+     *
+     * @return list of nodes of the graph
+     */
     List<Integer> nodes();
 
+    /**
+     * Get neighbours of a node in the graph.
+     *
+     * @param node to find the neighbourhood for.
+     * @return neighbourhood of a node.
+     */
     List<Integer> getNeighbours(Integer node);
 
+    /**
+     * Get a list of all edges of a graph.
+     *
+     * @return edges of the graph.
+     */
     default Set<Edge> edges() {
         Set<Edge> edges = new HashSet<>();
         var nodes = nodes();
@@ -53,10 +104,21 @@ interface Graph {
         return edges;
     }
 
+    /**
+     * Check whether the graph has at least one edge.
+     *
+     * @return whether the predicate is true or not.
+     */
     default boolean hasEdges() {
         return !edges().isEmpty();
     }
 
+    /**
+     * Check whether the node has an edge coming into it in the graph.
+     *
+     * @param target - node that edges should come into.
+     * @return whether the predicate is true or not.
+     */
     default boolean hasAnIncomingEdge(Integer target) {
         var nodes = nodes();
 
@@ -71,6 +133,11 @@ interface Graph {
         return false;
     }
 
+    /**
+     * Topologically sort a graph.
+     *
+     * @return topologically ordered nodes of the graph.
+     */
     default List<Integer> topologicalSort() {
         ArrayList<Integer> res = new ArrayList<Integer>();
         Graph g = deepCopy();
@@ -98,10 +165,21 @@ interface Graph {
         return res;
     }
 
+    /**
+     * A helper for `equals`.
+     *
+     * @param that - object to compare to.
+     * @return whether graph and `that` are equal.
+     */
     default boolean eq(Object that) {
         return that instanceof Graph && ((Graph) edges()).equals(((Graph) that).edges());
     }
 
+    /**
+     * A helper for `toString`.
+     *
+     * @return a basic string representation of a graph.
+     */
     default String str() {
         Set<Edge> edges = edges();
         String s = "";
