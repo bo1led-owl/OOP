@@ -1,61 +1,111 @@
 package sys.pro;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.NoSuchElementException;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /** Incidence matrix implementation of a graph. */
 public class IncidenceMatrixGraph implements Graph {
-    // `boolean` is `true` iff an edge is going **from** a vertex
-    private HashMap<Integer, HashMap<Edge, Boolean>> repr;
+    private ArrayList<Edge> edges;
+
+    // `null` is for edge that is not connected with the node, `true` if the edge enters the node,
+    // `false` if leaves
+    //
+    // first dimension is nodes, second is edges
+    private Boolean[][] repr;
 
     private IncidenceMatrixGraph(IncidenceMatrixGraph g) {
-        repr = new HashMap<Integer, HashMap<Edge, Boolean>>(g.repr);
+        edges = new ArrayList<Edge>(g.edges);
+        repr = new Boolean[g.repr.length][];
+        for (int i = 0; i < g.repr.length; ++i) {
+            repr[i] = (g.repr[i] == null) ? null : g.repr[i].clone();
+        }
     }
 
     /** Create an empty graph. */
     public IncidenceMatrixGraph() {
-        repr = new HashMap<Integer, HashMap<Edge, Boolean>>();
+        edges = new ArrayList<Edge>();
+        repr = new Boolean[0][0];
+    }
+
+    @Override
+    public boolean hasNode(Integer i) {
+        return i < repr.length && repr[i] != null;
     }
 
     @Override
     public void addNode(Integer i) {
-        repr.put(i, new HashMap<Edge, Boolean>());
+        if (hasNode(i)) {
+            return;
+        }
+
+        if (i >= repr.length) {
+            repr = Arrays.copyOf(repr, i + 1);
+        }
+
+        repr[i] = new Boolean[edges.size()];
     }
 
     @Override
     public void removeNode(Integer i) {
-        repr.remove(i);
-        for (HashMap<Edge, Boolean> edges : repr.values()) {
-            edges.entrySet().stream()
-                    .filter(e -> e.getValue() && e.getKey().to == i)
-                    .forEach(e -> edges.remove(e));
+        if (!hasNode(i)) {
+            throw new NoSuchElementException();
+        }
+
+        repr[i] = null;
+        for (int j = 0; j < edges.size(); ++j) {
+            var edge = edges.get(j);
+            if (edge == null) {
+                continue;
+            }
+
+            if (edge.from == i || edge.to == i) {
+                edges.set(j, null);
+            }
         }
     }
 
     @Override
     public void addEdge(Edge e) {
-        if (!repr.containsKey(e.from)) {
-            throw new NoSuchElementException("node " + e.from + " is not present");
+        if (!hasNode(e.from) || !hasNode(e.to)) {
+            throw new NoSuchElementException();
         }
-        if (!repr.containsKey(e.to)) {
-            throw new NoSuchElementException("node " + e.to + " is not present");
+
+        var edgeIndex = edges.indexOf(e);
+        if (edgeIndex == -1) {
+            edgeIndex = edges.indexOf(null);
+            if (edgeIndex == -1) {
+                edges.add(e);
+                edgeIndex = edges.size() - 1;
+
+                for (int i = 0; i < repr.length; ++i) {
+                    if (repr[i] == null) {
+                        continue;
+                    }
+                    repr[i] = Arrays.copyOf(repr[i], edges.size());
+                }
+            } else {
+                edges.set(edgeIndex, e);
+            }
         }
-        repr.get(e.from).put(e, true);
-        repr.get(e.to).put(e, false);
+
+        repr[e.from][edgeIndex] = false;
+        repr[e.to][edgeIndex] = true;
     }
 
     @Override
     public void removeEdge(Edge e) {
-        if (!repr.containsKey(e.from)) {
-            throw new NoSuchElementException("node " + e.from + " is not present");
+        if (!hasNode(e.from) || !hasNode(e.to) || !edges.contains(e)) {
+            throw new NoSuchElementException();
         }
-        if (!repr.containsKey(e.to)) {
-            throw new NoSuchElementException("node " + e.to + " is not present");
-        }
-        repr.get(e.from).remove(e);
+
+        var i = edges.indexOf(e);
+        edges.remove(i);
+        repr[e.from][i] = null;
+        repr[e.to][i] = null;
     }
 
     @Override
@@ -64,16 +114,33 @@ public class IncidenceMatrixGraph implements Graph {
     }
 
     @Override
-    public List<Integer> nodes() {
-        return new ArrayList<Integer>(repr.keySet());
+    public Set<Integer> nodes() {
+        var res = new HashSet<Integer>();
+
+        for (int i = 0; i < repr.length; ++i) {
+            if (hasNode(i)) {
+                res.add(i);
+            }
+        }
+
+        return res;
     }
 
     @Override
-    public List<Integer> getNeighbours(Integer node) {
-        return repr.get(node).entrySet().stream()
-                .filter(e -> e.getValue())
-                .map(e -> e.getKey().to)
-                .collect(Collectors.toList());
+    public Set<Edge> edges() {
+        return edges.stream().filter(e -> e != null).collect(Collectors.toSet());
+    }
+
+    @Override
+    public Set<Integer> getNeighbours(Integer node) {
+        if (!hasNode(node)) {
+            throw new NoSuchElementException();
+        }
+
+        return edges.stream()
+                .filter(e -> e.from == node)
+                .map(e -> e.to)
+                .collect(Collectors.toSet());
     }
 
     @Override
@@ -83,8 +150,11 @@ public class IncidenceMatrixGraph implements Graph {
 
     @Override
     public boolean hasAnIncomingEdge(Integer target) {
-        HashMap<Edge, Boolean> edges = repr.get(target);
-        return edges.values().stream().anyMatch(b -> !b);
+        if (!hasNode(target)) {
+            throw new NoSuchElementException();
+        }
+
+        return edges.stream().anyMatch(e -> e.to == target);
     }
 
     @Override

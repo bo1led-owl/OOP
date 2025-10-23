@@ -1,57 +1,81 @@
 package sys.pro;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Arrays;
 import java.util.HashSet;
-import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Set;
 
 /** Adjacency matrix implementation of a graph. */
 public class AdjMatrixGraph implements Graph {
-    private HashMap<Integer, HashSet<Integer>> repr;
+    private boolean[][] repr;
 
     private AdjMatrixGraph(AdjMatrixGraph g) {
-        repr = new HashMap<Integer, HashSet<Integer>>(g.repr);
+        repr = new boolean[g.repr.length][];
+        for (int i = 0; i < g.repr.length; ++i) {
+            repr[i] = (g.repr[i] == null) ? null : g.repr[i].clone();
+        }
     }
 
     /** Create an empty graph. */
     public AdjMatrixGraph() {
-        repr = new HashMap<Integer, HashSet<Integer>>();
+        repr = new boolean[][] {};
+    }
+
+    @Override
+    public boolean hasNode(Integer node) {
+        return node < repr.length && repr[node] != null;
     }
 
     @Override
     public void addNode(Integer i) {
-        repr.put(i, new HashSet<Integer>());
+        if (hasNode(i)) {
+            return;
+        }
+
+        if (i >= repr.length) {
+            repr = Arrays.copyOf(repr, i + 1);
+            for (int j = 0; j < repr.length; ++j) {
+                if (repr[j] == null) {
+                    continue;
+                }
+                repr[j] = Arrays.copyOf(repr[j], i + 1);
+            }
+        }
+
+        repr[i] = new boolean[repr.length];
     }
 
     @Override
     public void removeNode(Integer i) {
-        repr.remove(i);
-        for (HashSet<Integer> nodes : repr.values()) {
-            nodes.remove(i);
+        if (!hasNode(i)) {
+            throw new NoSuchElementException();
+        }
+
+        repr[i] = null;
+        for (int j = 0; j < repr.length; ++j) {
+            if (repr[j] == null) {
+                continue;
+            }
+            repr[j][i] = false;
         }
     }
 
     @Override
     public void addEdge(Edge e) {
-        if (!repr.containsKey(e.from)) {
-            throw new NoSuchElementException("node " + e.from + " is not present");
+        if (!hasNode(e.from) || !hasNode(e.to)) {
+            throw new NoSuchElementException();
         }
-        if (!repr.containsKey(e.to)) {
-            throw new NoSuchElementException("node " + e.to + " is not present");
-        }
-        repr.get(e.from).add(e.to);
+
+        repr[e.from][e.to] = true;
     }
 
     @Override
     public void removeEdge(Edge e) {
-        if (!repr.containsKey(e.from)) {
-            throw new NoSuchElementException("node " + e.from + " is not present");
+        if (!hasNode(e.from) || !hasNode(e.to)) {
+            throw new NoSuchElementException();
         }
-        if (!repr.containsKey(e.to)) {
-            throw new NoSuchElementException("node " + e.to + " is not present");
-        }
-        repr.get(e.from).remove(e.to);
+
+        repr[e.from][e.to] = false;
     }
 
     @Override
@@ -60,13 +84,34 @@ public class AdjMatrixGraph implements Graph {
     }
 
     @Override
-    public List<Integer> nodes() {
-        return new ArrayList<Integer>(repr.keySet());
+    public Set<Integer> nodes() {
+        var res = new HashSet<Integer>();
+
+        for (int i = 0; i < repr.length; ++i) {
+            if (hasNode(i)) {
+                res.add(i);
+            }
+        }
+
+        return res;
     }
 
     @Override
-    public List<Integer> getNeighbours(Integer node) {
-        return new ArrayList<Integer>(repr.get(node));
+    public Set<Integer> getNeighbours(Integer node) {
+        if (!hasNode(node)) {
+            throw new NoSuchElementException();
+        }
+
+        var row = repr[node];
+        var res = new HashSet<Integer>();
+
+        for (int i = 0; i < row.length; ++i) {
+            if (row[i]) {
+                res.add(i);
+            }
+        }
+
+        return res;
     }
 
     @Override

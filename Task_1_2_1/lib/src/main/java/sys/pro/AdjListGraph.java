@@ -1,56 +1,79 @@
 package sys.pro;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.NoSuchElementException;
+import java.util.Set;
 
 /** Adjacency list implementation of a graph. */
 public class AdjListGraph implements Graph {
-    private HashMap<Integer, ArrayList<Integer>> repr;
+    private ArrayList<Integer>[] repr;
 
     private AdjListGraph(AdjListGraph g) {
-        repr = new HashMap<Integer, ArrayList<Integer>>(g.repr);
+        repr = Arrays.<ArrayList<Integer>>copyOf(g.repr, g.repr.length);
     }
 
     /** Create an empty graph. */
     public AdjListGraph() {
-        repr = new HashMap<Integer, ArrayList<Integer>>();
+        repr = new ArrayList[0];
+    }
+
+    @Override
+    public boolean hasNode(Integer node) {
+        return node < repr.length && repr[node] != null;
     }
 
     @Override
     public void addNode(Integer i) {
-        repr.put(i, new ArrayList<Integer>());
+        if (i < repr.length && repr[i] != null) {
+            return;
+        }
+
+        if (i >= repr.length) {
+            repr = Arrays.copyOf(repr, i + 1);
+        }
+        repr[i] = new ArrayList<Integer>();
     }
 
     @Override
     public void removeNode(Integer i) {
-        repr.remove(i);
-        for (ArrayList<Integer> nodes : repr.values()) {
-            nodes.removeIf(n -> n == i);
+        if (!hasNode(i)) {
+            throw new NoSuchElementException();
+        }
+
+        repr[i] = null;
+        for (int j = 0; j < repr.length; ++j) {
+            if (repr[j] == null) {
+                continue;
+            }
+            repr[j].removeIf(n -> n == i);
         }
     }
 
     @Override
     public void addEdge(Edge e) {
-        if (!repr.containsKey(e.from)) {
-            throw new NoSuchElementException("node " + e.from + " is not present");
+        if (!hasNode(e.from) || !hasNode(e.to)) {
+            throw new NoSuchElementException();
         }
-        if (!repr.containsKey(e.to)) {
-            throw new NoSuchElementException("node " + e.to + " is not present");
+
+        if (repr[e.from].contains(e.to)) {
+            return;
         }
-        repr.get(e.from).add(e.to);
+
+        repr[e.from].add(e.to);
     }
 
     @Override
     public void removeEdge(Edge e) {
-        if (!repr.containsKey(e.from)) {
-            throw new NoSuchElementException("node " + e.from + " is not present");
+        if (!hasNode(e.from)) {
+            throw new NoSuchElementException();
         }
-        if (!repr.containsKey(e.to)) {
-            throw new NoSuchElementException("node " + e.to + " is not present");
+
+        boolean deleted = repr[e.from].remove((Object) e.to);
+        if (!deleted) {
+            throw new NoSuchElementException();
         }
-        repr.get(e.from).removeIf(n -> n == e.to);
     }
 
     @Override
@@ -59,13 +82,24 @@ public class AdjListGraph implements Graph {
     }
 
     @Override
-    public List<Integer> nodes() {
-        return new ArrayList<Integer>(repr.keySet());
+    public Set<Integer> nodes() {
+        var res = new HashSet<Integer>();
+
+        for (int i = 0; i < repr.length; ++i) {
+            if (hasNode(i)) {
+                res.add(i);
+            }
+        }
+
+        return res;
     }
 
     @Override
-    public List<Integer> getNeighbours(Integer node) {
-        return new ArrayList<Integer>(repr.get(node));
+    public Set<Integer> getNeighbours(Integer node) {
+        if (!hasNode(node)) {
+            throw new NoSuchElementException();
+        }
+        return new HashSet<Integer>(repr[node]);
     }
 
     @Override

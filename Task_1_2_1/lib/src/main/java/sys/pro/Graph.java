@@ -3,6 +3,7 @@ package sys.pro;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
@@ -17,7 +18,7 @@ public interface Graph {
      * @param input - input string.
      * @return parsed graph.
      */
-    static <G extends Graph> Graph fromString(Supplier<G> supp, String input) {
+    static <G extends Graph> G fromString(Supplier<G> supp, String input) {
         G res = supp.get();
 
         for (String[] edge :
@@ -43,14 +44,14 @@ public interface Graph {
     Graph deepCopy();
 
     /**
-     * Add a new node to the graph.
+     * Add a new node to the graph. If the node is already present, do nothing.
      *
      * @param i - node index
      */
     void addNode(Integer i);
 
     /**
-     * Remove a node from the graph.
+     * Remove a node from the graph. If the node is not present, throw `NoSuchElementException`.
      *
      * @param i - node to remove.
      */
@@ -58,7 +59,7 @@ public interface Graph {
 
     /**
      * Add an edge to the graph. Throws `NoSuchElementException` if either source or destination
-     * node was not in the graph.
+     * node was not in the graph. If the edge is already present, do nothing.
      *
      * @param e - edge to add.
      */
@@ -72,19 +73,27 @@ public interface Graph {
     void removeEdge(Edge e);
 
     /**
-     * Get a list of all nodes of a graph.
+     * Check whether given graph contains the node.
+     *
+     * @param node - node to check against
+     */
+    boolean hasNode(Integer node);
+
+    /**
+     * Get all nodes of a graph.
      *
      * @return list of nodes of the graph
      */
-    List<Integer> nodes();
+    Set<Integer> nodes();
 
     /**
-     * Get neighbours of a node in the graph.
+     * Get neighbours of a node in the graph. Throws `NoSuchElementException` if node is not
+     * present.
      *
      * @param node to find the neighbourhood for.
      * @return neighbourhood of a node.
      */
-    List<Integer> getNeighbours(Integer node);
+    Set<Integer> getNeighbours(Integer node);
 
     /**
      * Get a list of all edges of a graph.
@@ -116,10 +125,16 @@ public interface Graph {
     /**
      * Check whether the node has an edge coming into it in the graph.
      *
+     * <p>Throws `NoSuchElementException` if node is not present.
+     *
      * @param target - node that edges should come into.
      * @return whether the predicate is true or not.
      */
     default boolean hasAnIncomingEdge(Integer target) {
+        if (!hasNode(target)) {
+            throw new NoSuchElementException();
+        }
+
         var nodes = nodes();
 
         for (Integer node : nodes) {
@@ -142,7 +157,7 @@ public interface Graph {
         ArrayList<Integer> res = new ArrayList<Integer>();
         Graph g = deepCopy();
 
-        List<Integer> nodes = g.nodes();
+        var nodes = g.nodes();
         Set<Integer> nodesWithoutAnIncomingEdge =
                 nodes.stream().filter(n -> !g.hasAnIncomingEdge(n)).collect(Collectors.toSet());
         while (!nodesWithoutAnIncomingEdge.isEmpty()) {
@@ -172,7 +187,9 @@ public interface Graph {
      * @return whether graph and `that` are equal.
      */
     default boolean eq(Object that) {
-        return that instanceof Graph && ((Graph) edges()).equals(((Graph) that).edges());
+        return that instanceof Graph
+                && edges().equals(((Graph) that).edges())
+                && nodes().equals(((Graph) that).nodes());
     }
 
     /**
