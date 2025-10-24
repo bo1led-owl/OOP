@@ -62,7 +62,7 @@ public class IncidenceMatrixGraph implements Graph {
                 continue;
             }
 
-            if (edge.from == i || edge.to == i) {
+            if (edge.from.equals(i) || edge.to.equals(i)) {
                 edges.set(j, null);
             }
         }
@@ -138,7 +138,7 @@ public class IncidenceMatrixGraph implements Graph {
         }
 
         return edges.stream()
-                .filter(e -> e.from == node)
+                .filter(e -> e.from.equals(node))
                 .map(e -> e.to)
                 .collect(Collectors.toSet());
     }
@@ -154,7 +154,7 @@ public class IncidenceMatrixGraph implements Graph {
             throw new NoSuchElementException();
         }
 
-        return edges.stream().anyMatch(e -> e.to == target);
+        return edges.stream().anyMatch(e -> e.to.equals(target));
     }
 
     @Override

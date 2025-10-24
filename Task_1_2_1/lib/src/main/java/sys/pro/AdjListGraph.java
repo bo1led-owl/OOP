@@ -47,7 +47,7 @@ public class AdjListGraph implements Graph {
             if (repr[j] == null) {
                 continue;
             }
-            repr[j].removeIf(n -> n == i);
+            repr[j].removeIf(n -> n.equals(i));
         }
     }
 

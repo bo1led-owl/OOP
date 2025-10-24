@@ -31,6 +31,8 @@ public class Edge {
 
     @Override
     public boolean equals(Object that) {
-        return that instanceof Edge && ((Edge) that).from == from && ((Edge) that).to == to;
+        return that instanceof Edge
+                && ((Edge) that).from.equals(from)
+                && ((Edge) that).to.equals(to);
     }
 }

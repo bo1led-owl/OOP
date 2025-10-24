@@ -139,7 +139,7 @@ public interface Graph {
 
         for (Integer node : nodes) {
             for (Integer neighbour : getNeighbours(node)) {
-                if (neighbour == target) {
+                if (neighbour.equals(target)) {
                     return true;
                 }
             }
