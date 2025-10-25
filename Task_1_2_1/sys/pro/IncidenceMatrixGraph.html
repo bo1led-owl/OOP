@@ -97,6 +97,10 @@ implements <a href="Graph.html" title="interface in sys.pro">Graph</a></span></d
 <div class="col-last even-row-color">
 <div class="block">Create an empty graph.</div>
 </div>
+<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(sys.pro.Graph)" class="member-name-link">IncidenceMatrixGraph</a><wbr>(<a href="Graph.html" title="interface in sys.pro">Graph</a>&nbsp;g)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Copy a graph to incidence matrix representaion.</div>
+</div>
 </div>
 </section>
 </li>
@@ -121,52 +125,47 @@ implements <a href="Graph.html" title="interface in sys.pro">Graph</a></span></d
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Add a new node to the graph.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="Graph.html" title="interface in sys.pro">Graph</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#deepCopy()" class="member-name-link">deepCopy</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="Edge.html" title="class in sys.pro">Edge</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#edges()" class="member-name-link">edges</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Create a deep copy of this graph.</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="Edge.html" title="class in sys.pro">Edge</a>&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#edges()" class="member-name-link">edges</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Get a list of all edges of a graph.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#equals(java.lang.Object)" class="member-name-link">equals</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;that)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getNeighbours(java.lang.Integer)" class="member-name-link">getNeighbours</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&nbsp;node)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#equals(java.lang.Object)" class="member-name-link">equals</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;that)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getNeighbours(java.lang.Integer)" class="member-name-link">getNeighbours</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&nbsp;node)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Get neighbours of a node in the graph.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#hasAnIncomingEdge(java.lang.Integer)" class="member-name-link">hasAnIncomingEdge</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&nbsp;target)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#hasAnIncomingEdge(java.lang.Integer)" class="member-name-link">hasAnIncomingEdge</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&nbsp;target)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Check whether the node has an edge coming into it in the graph.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#hasNode(java.lang.Integer)" class="member-name-link">hasNode</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&nbsp;i)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#hasNode(java.lang.Integer)" class="member-name-link">hasNode</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&nbsp;i)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Check whether given graph contains the node.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#nodes()" class="member-name-link">nodes</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#nodes()" class="member-name-link">nodes</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Get all nodes of a graph.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#removeEdge(sys.pro.Edge)" class="member-name-link">removeEdge</a><wbr>(<a href="Edge.html" title="class in sys.pro">Edge</a>&nbsp;e)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#removeEdge(sys.pro.Edge)" class="member-name-link">removeEdge</a><wbr>(<a href="Edge.html" title="class in sys.pro">Edge</a>&nbsp;e)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Remove an edge from the graph.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#removeNode(java.lang.Integer)" class="member-name-link">removeNode</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&nbsp;i)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#removeNode(java.lang.Integer)" class="member-name-link">removeNode</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&nbsp;i)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Remove a node from the graph.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -192,6 +191,13 @@ implements <a href="Graph.html" title="interface in sys.pro">Graph</a></span></d
 <h3>IncidenceMatrixGraph</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">IncidenceMatrixGraph</span>()</div>
 <div class="block">Create an empty graph.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="&lt;init&gt;(sys.pro.Graph)">
+<h3>IncidenceMatrixGraph</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">IncidenceMatrixGraph</span><wbr><span class="parameters">(<a href="Graph.html" title="interface in sys.pro">Graph</a>&nbsp;g)</span></div>
+<div class="block">Copy a graph to incidence matrix representaion.</div>
 </section>
 </li>
 </ul>
@@ -235,7 +241,7 @@ implements <a href="Graph.html" title="interface in sys.pro">Graph</a></span></d
 <h3>removeNode</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">removeNode</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&nbsp;i)</span></div>
 <div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="Graph.html#removeNode(java.lang.Integer)">Graph</a></code></span></div>
-<div class="block">Remove a node from the graph. If the node is not present, throw `NoSuchElementException`.</div>
+<div class="block">Remove a node from the graph.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="Graph.html#removeNode(java.lang.Integer)">removeNode</a></code>&nbsp;in interface&nbsp;<code><a href="Graph.html" title="interface in sys.pro">Graph</a></code></dd>
@@ -249,8 +255,7 @@ implements <a href="Graph.html" title="interface in sys.pro">Graph</a></span></d
 <h3>addEdge</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">addEdge</span><wbr><span class="parameters">(<a href="Edge.html" title="class in sys.pro">Edge</a>&nbsp;e)</span></div>
 <div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="Graph.html#addEdge(sys.pro.Edge)">Graph</a></code></span></div>
-<div class="block">Add an edge to the graph. Throws `NoSuchElementException` if either source or destination
- node was not in the graph. If the edge is already present, do nothing.</div>
+<div class="block">Add an edge to the graph. If the edge is already present, do nothing.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="Graph.html#addEdge(sys.pro.Edge)">addEdge</a></code>&nbsp;in interface&nbsp;<code><a href="Graph.html" title="interface in sys.pro">Graph</a></code></dd>
@@ -270,20 +275,6 @@ implements <a href="Graph.html" title="interface in sys.pro">Graph</a></span></d
 <dd><code><a href="Graph.html#removeEdge(sys.pro.Edge)">removeEdge</a></code>&nbsp;in interface&nbsp;<code><a href="Graph.html" title="interface in sys.pro">Graph</a></code></dd>
 <dt>Parameters:</dt>
 <dd><code>e</code> - - edge to remove</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="deepCopy()">
-<h3>deepCopy</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="Graph.html" title="interface in sys.pro">Graph</a></span>&nbsp;<span class="element-name">deepCopy</span>()</div>
-<div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="Graph.html#deepCopy()">Graph</a></code></span></div>
-<div class="block">Create a deep copy of this graph.</div>
-<dl class="notes">
-<dt>Specified by:</dt>
-<dd><code><a href="Graph.html#deepCopy()">deepCopy</a></code>&nbsp;in interface&nbsp;<code><a href="Graph.html" title="interface in sys.pro">Graph</a></code></dd>
-<dt>Returns:</dt>
-<dd>the copied graph.</dd>
 </dl>
 </section>
 </li>
@@ -320,8 +311,7 @@ implements <a href="Graph.html" title="interface in sys.pro">Graph</a></span></d
 <h3>getNeighbours</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&gt;</span>&nbsp;<span class="element-name">getNeighbours</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&nbsp;node)</span></div>
 <div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="Graph.html#getNeighbours(java.lang.Integer)">Graph</a></code></span></div>
-<div class="block">Get neighbours of a node in the graph. Throws `NoSuchElementException` if node is not
- present.</div>
+<div class="block">Get neighbours of a node in the graph.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="Graph.html#getNeighbours(java.lang.Integer)">getNeighbours</a></code>&nbsp;in interface&nbsp;<code><a href="Graph.html" title="interface in sys.pro">Graph</a></code></dd>
@@ -347,9 +337,7 @@ implements <a href="Graph.html" title="interface in sys.pro">Graph</a></span></d
 <h3>hasAnIncomingEdge</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">hasAnIncomingEdge</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&nbsp;target)</span></div>
 <div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="Graph.html#hasAnIncomingEdge(java.lang.Integer)">Graph</a></code></span></div>
-<div class="block">Check whether the node has an edge coming into it in the graph.
-
- <p>Throws `NoSuchElementException` if node is not present.</div>
+<div class="block">Check whether the node has an edge coming into it in the graph.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="Graph.html#hasAnIncomingEdge(java.lang.Integer)">hasAnIncomingEdge</a></code>&nbsp;in interface&nbsp;<code><a href="Graph.html" title="interface in sys.pro">Graph</a></code></dd>
