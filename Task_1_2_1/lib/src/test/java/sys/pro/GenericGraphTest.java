@@ -3,12 +3,14 @@ package sys.pro;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertIterableEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.NoSuchElementException;
 import java.util.function.Supplier;
 
 abstract class GenericGraphTest<G extends Graph> {
@@ -68,6 +70,30 @@ abstract class GenericGraphTest<G extends Graph> {
         g.removeNode(2);
         assertEquals(nodes, g.nodes());
         assertEquals(edges, g.edges());
+
+        assertThrows(NoSuchElementException.class, () -> g.removeNode(100500));
+    }
+
+    @Test
+    final void replaceNode() {
+        var g = newGraph("1-3\n4-2\n5-2");
+
+        var nodes = g.nodes();
+        nodes.remove(2);
+        var edges = g.edges();
+        edges.remove(new Edge(4, 2));
+        edges.remove(new Edge(5, 2));
+
+        g.removeNode(2);
+        assertEquals(nodes, g.nodes());
+        assertEquals(edges, g.edges());
+
+        nodes = g.nodes();
+        edges = g.edges();
+        g.addNode(6);
+        nodes.add(6);
+        assertEquals(nodes, g.nodes());
+        assertEquals(edges, g.edges());
     }
 
     @Test
@@ -84,6 +110,9 @@ abstract class GenericGraphTest<G extends Graph> {
 
         assertEquals(nodes, g.nodes());
         assertEquals(edges, g.edges());
+
+        assertThrows(NoSuchElementException.class, () -> g.addEdge(new Edge(1, 5)));
+        assertThrows(NoSuchElementException.class, () -> g.addEdge(new Edge(5, 1)));
     }
 
     @Test
@@ -100,11 +129,15 @@ abstract class GenericGraphTest<G extends Graph> {
 
         assertEquals(nodes, g.nodes());
         assertEquals(edges, g.edges());
+
+        assertThrows(NoSuchElementException.class, () -> g.removeEdge(new Edge(2, 4)));
     }
 
     @Test
     final void getNeighbours() {
         var g = newGraph("1-3\n1-2\n4-1");
+
+        assertThrows(NoSuchElementException.class, () -> g.getNeighbours(5));
 
         var neighbours = new HashSet<Integer>();
         neighbours.add(3);
@@ -119,6 +152,8 @@ abstract class GenericGraphTest<G extends Graph> {
 
         assertTrue(g.hasAnIncomingEdge(1));
         assertFalse(g.hasAnIncomingEdge(4));
+
+        assertThrows(NoSuchElementException.class, () -> g.hasAnIncomingEdge(5));
     }
 
     @Test
@@ -129,5 +164,8 @@ abstract class GenericGraphTest<G extends Graph> {
 
         var correct = Arrays.asList(new Integer[] {1, 2, 3, 4});
         assertIterableEquals(correct, topsort);
+
+        var graphWithLoop = newGraph("1-2\n2-3\n3-1");
+        assertThrows(IllegalArgumentException.class, () -> graphWithLoop.topologicalSort());
     }
 }

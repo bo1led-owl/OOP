@@ -37,13 +37,6 @@ public interface Graph {
     }
 
     /**
-     * Create a deep copy of this graph.
-     *
-     * @return the copied graph.
-     */
-    Graph deepCopy();
-
-    /**
      * Add a new node to the graph. If the node is already present, do nothing.
      *
      * @param i - node index
@@ -51,16 +44,17 @@ public interface Graph {
     void addNode(Integer i);
 
     /**
-     * Remove a node from the graph. If the node is not present, throw `NoSuchElementException`.
+     * Remove a node from the graph.
      *
+     * @throws NoSuchElementException if the node is not present
      * @param i - node to remove.
      */
     void removeNode(Integer i);
 
     /**
-     * Add an edge to the graph. Throws `NoSuchElementException` if either source or destination
-     * node was not in the graph. If the edge is already present, do nothing.
+     * Add an edge to the graph. If the edge is already present, do nothing.
      *
+     * @throws NoSuchElementException if either source or destination node was not in the graph.
      * @param e - edge to add.
      */
     void addEdge(Edge e);
@@ -68,6 +62,7 @@ public interface Graph {
     /**
      * Remove an edge from the graph.
      *
+     * @throws NoSuchElementException if the edge is not in the graph.
      * @param e - edge to remove
      */
     void removeEdge(Edge e);
@@ -87,9 +82,9 @@ public interface Graph {
     Set<Integer> nodes();
 
     /**
-     * Get neighbours of a node in the graph. Throws `NoSuchElementException` if node is not
-     * present.
+     * Get neighbours of a node in the graph.
      *
+     * @throws NoSuchElementException if node is not present.
      * @param node to find the neighbourhood for.
      * @return neighbourhood of a node.
      */
@@ -125,8 +120,7 @@ public interface Graph {
     /**
      * Check whether the node has an edge coming into it in the graph.
      *
-     * <p>Throws `NoSuchElementException` if node is not present.
-     *
+     * @throws NoSuchElementException if node is not present.
      * @param target - node that edges should come into.
      * @return whether the predicate is true or not.
      */
@@ -155,25 +149,24 @@ public interface Graph {
      */
     default List<Integer> topologicalSort() {
         ArrayList<Integer> res = new ArrayList<Integer>();
-        Graph g = deepCopy();
 
-        var nodes = g.nodes();
+        var nodes = nodes();
         Set<Integer> nodesWithoutAnIncomingEdge =
-                nodes.stream().filter(n -> !g.hasAnIncomingEdge(n)).collect(Collectors.toSet());
+                nodes.stream().filter(n -> !hasAnIncomingEdge(n)).collect(Collectors.toSet());
         while (!nodesWithoutAnIncomingEdge.isEmpty()) {
             Integer n = nodesWithoutAnIncomingEdge.iterator().next();
             nodesWithoutAnIncomingEdge.remove(n);
             res.add(n);
 
-            for (Integer m : g.getNeighbours(n)) {
-                g.removeEdge(new Edge(n, m));
-                if (!g.hasAnIncomingEdge(m)) {
+            for (Integer m : getNeighbours(n)) {
+                removeEdge(new Edge(n, m));
+                if (!hasAnIncomingEdge(m)) {
                     nodesWithoutAnIncomingEdge.add(m);
                 }
             }
         }
 
-        if (g.hasEdges()) {
+        if (hasEdges()) {
             throw new IllegalArgumentException("Graph had cycles");
         }
 

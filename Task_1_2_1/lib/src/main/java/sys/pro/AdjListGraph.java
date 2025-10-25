@@ -1,39 +1,52 @@
 package sys.pro;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.NoSuchElementException;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /** Adjacency list implementation of a graph. */
 public class AdjListGraph implements Graph {
-    private ArrayList<Integer>[] repr;
-
-    private AdjListGraph(AdjListGraph g) {
-        repr = Arrays.<ArrayList<Integer>>copyOf(g.repr, g.repr.length);
-    }
+    private ArrayList<Integer> nodes;
+    private ArrayList<ArrayList<Integer>> repr;
 
     /** Create an empty graph. */
     public AdjListGraph() {
-        repr = new ArrayList[0];
+        nodes = new ArrayList<Integer>();
+        repr = new ArrayList<ArrayList<Integer>>();
+    }
+
+    /** Copy a graph to adjacency list representaion. */
+    public AdjListGraph(Graph g) {
+        this();
+
+        g.nodes().forEach(n -> addNode(n));
+        g.edges().forEach(e -> addEdge(e));
+    }
+
+    private int nodeIndex(Integer node) {
+        return nodes.indexOf(node);
     }
 
     @Override
     public boolean hasNode(Integer node) {
-        return node < repr.length && repr[node] != null;
+        return nodes.contains(node);
     }
 
     @Override
     public void addNode(Integer i) {
-        if (i < repr.length && repr[i] != null) {
+        if (hasNode(i)) {
             return;
         }
 
-        if (i >= repr.length) {
-            repr = Arrays.copyOf(repr, i + 1);
+        int firstEmpty = nodes.indexOf(-1);
+        if (firstEmpty != -1) {
+            nodes.set(firstEmpty, i);
+            repr.set(firstEmpty, new ArrayList<Integer>());
+        } else {
+            nodes.add(i);
+            repr.add(new ArrayList<Integer>());
         }
-        repr[i] = new ArrayList<Integer>();
     }
 
     @Override
@@ -42,13 +55,16 @@ public class AdjListGraph implements Graph {
             throw new NoSuchElementException();
         }
 
-        repr[i] = null;
-        for (int j = 0; j < repr.length; ++j) {
-            if (repr[j] == null) {
-                continue;
-            }
-            repr[j].removeIf(n -> n.equals(i));
+        int idx = nodeIndex(i);
+        if (idx == nodes.size()) {
+            nodes.remove(nodes.size() - 1);
+            repr.remove(repr.size() - 1);
+        } else {
+            nodes.set(idx, -1);
+            repr.set(idx, null);
         }
+
+        repr.stream().filter(row -> row != null).forEach(row -> row.remove((Object) idx));
     }
 
     @Override
@@ -57,11 +73,13 @@ public class AdjListGraph implements Graph {
             throw new NoSuchElementException();
         }
 
-        if (repr[e.from].contains(e.to)) {
+        int fromIdx = nodeIndex(e.from);
+        int toIdx = nodeIndex(e.to);
+        if (repr.get(fromIdx).contains(toIdx)) {
             return;
         }
 
-        repr[e.from].add(e.to);
+        repr.get(fromIdx).add(toIdx);
     }
 
     @Override
@@ -70,28 +88,17 @@ public class AdjListGraph implements Graph {
             throw new NoSuchElementException();
         }
 
-        boolean deleted = repr[e.from].remove((Object) e.to);
+        int fromIdx = nodeIndex(e.from);
+        int toIdx = nodeIndex(e.to);
+        boolean deleted = repr.get(fromIdx).remove((Object) toIdx);
         if (!deleted) {
             throw new NoSuchElementException();
         }
     }
 
     @Override
-    public Graph deepCopy() {
-        return new AdjListGraph(this);
-    }
-
-    @Override
     public Set<Integer> nodes() {
-        var res = new HashSet<Integer>();
-
-        for (int i = 0; i < repr.length; ++i) {
-            if (hasNode(i)) {
-                res.add(i);
-            }
-        }
-
-        return res;
+        return nodes.stream().filter(n -> n != -1).collect(Collectors.toSet());
     }
 
     @Override
@@ -99,7 +106,10 @@ public class AdjListGraph implements Graph {
         if (!hasNode(node)) {
             throw new NoSuchElementException();
         }
-        return new HashSet<Integer>(repr[node]);
+
+        return repr.get(nodeIndex(node)).stream()
+                .map(n -> nodes.get(n))
+                .collect(Collectors.toSet());
     }
 
     @Override

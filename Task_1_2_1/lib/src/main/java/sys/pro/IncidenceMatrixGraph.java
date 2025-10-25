@@ -1,7 +1,7 @@
 package sys.pro;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.NoSuchElementException;
 import java.util.Set;
@@ -9,31 +9,37 @@ import java.util.stream.Collectors;
 
 /** Incidence matrix implementation of a graph. */
 public class IncidenceMatrixGraph implements Graph {
+    private ArrayList<Integer> nodes;
     private ArrayList<Edge> edges;
 
     // `null` is for edge that is not connected with the node, `true` if the edge enters the node,
     // `false` if leaves
     //
     // first dimension is nodes, second is edges
-    private Boolean[][] repr;
-
-    private IncidenceMatrixGraph(IncidenceMatrixGraph g) {
-        edges = new ArrayList<Edge>(g.edges);
-        repr = new Boolean[g.repr.length][];
-        for (int i = 0; i < g.repr.length; ++i) {
-            repr[i] = (g.repr[i] == null) ? null : g.repr[i].clone();
-        }
-    }
+    private ArrayList<ArrayList<Boolean>> repr;
 
     /** Create an empty graph. */
     public IncidenceMatrixGraph() {
+        nodes = new ArrayList<Integer>();
         edges = new ArrayList<Edge>();
-        repr = new Boolean[0][0];
+        repr = new ArrayList<ArrayList<Boolean>>();
+    }
+
+    /** Copy a graph to incidence matrix representaion. */
+    public IncidenceMatrixGraph(Graph g) {
+        this();
+
+        g.nodes().forEach(n -> addNode(n));
+        g.edges().forEach(e -> addEdge(e));
+    }
+
+    private int nodeIndex(Integer node) {
+        return nodes.indexOf(node);
     }
 
     @Override
     public boolean hasNode(Integer i) {
-        return i < repr.length && repr[i] != null;
+        return nodes.contains(i);
     }
 
     @Override
@@ -42,11 +48,8 @@ public class IncidenceMatrixGraph implements Graph {
             return;
         }
 
-        if (i >= repr.length) {
-            repr = Arrays.copyOf(repr, i + 1);
-        }
-
-        repr[i] = new Boolean[edges.size()];
+        nodes.add(i);
+        repr.add(new ArrayList<Boolean>(Collections.nCopies(edges.size(), null)));
     }
 
     @Override
@@ -55,15 +58,20 @@ public class IncidenceMatrixGraph implements Graph {
             throw new NoSuchElementException();
         }
 
-        repr[i] = null;
-        for (int j = 0; j < edges.size(); ++j) {
-            var edge = edges.get(j);
-            if (edge == null) {
-                continue;
-            }
+        int idx = nodeIndex(i);
+        nodes.remove(idx);
+        repr.remove(idx);
 
-            if (edge.from.equals(i) || edge.to.equals(i)) {
-                edges.set(j, null);
+        int j = 0;
+        while (j < edges.size()) {
+            var edge = edges.get(j);
+            if (edge.to.equals(i) || edge.from.equals(i)) {
+                edges.remove(j);
+                for (var row : repr) {
+                    row.remove(j);
+                }
+            } else {
+                j++;
             }
         }
     }
@@ -74,26 +82,16 @@ public class IncidenceMatrixGraph implements Graph {
             throw new NoSuchElementException();
         }
 
-        var edgeIndex = edges.indexOf(e);
-        if (edgeIndex == -1) {
-            edgeIndex = edges.indexOf(null);
-            if (edgeIndex == -1) {
-                edges.add(e);
-                edgeIndex = edges.size() - 1;
-
-                for (int i = 0; i < repr.length; ++i) {
-                    if (repr[i] == null) {
-                        continue;
-                    }
-                    repr[i] = Arrays.copyOf(repr[i], edges.size());
-                }
-            } else {
-                edges.set(edgeIndex, e);
-            }
+        if (edges.contains(e)) {
+            return;
         }
 
-        repr[e.from][edgeIndex] = false;
-        repr[e.to][edgeIndex] = true;
+        edges.add(e);
+        repr.forEach(row -> row.add(null));
+        int edgeIndex = edges.size() - 1;
+
+        repr.get(nodeIndex(e.from)).set(edgeIndex, false);
+        repr.get(nodeIndex(e.to)).set(edgeIndex, true);
     }
 
     @Override
@@ -104,31 +102,17 @@ public class IncidenceMatrixGraph implements Graph {
 
         var i = edges.indexOf(e);
         edges.remove(i);
-        repr[e.from][i] = null;
-        repr[e.to][i] = null;
-    }
-
-    @Override
-    public Graph deepCopy() {
-        return new IncidenceMatrixGraph(this);
+        repr.forEach(row -> row.remove(i));
     }
 
     @Override
     public Set<Integer> nodes() {
-        var res = new HashSet<Integer>();
-
-        for (int i = 0; i < repr.length; ++i) {
-            if (hasNode(i)) {
-                res.add(i);
-            }
-        }
-
-        return res;
+        return new HashSet<Integer>(nodes);
     }
 
     @Override
     public Set<Edge> edges() {
-        return edges.stream().filter(e -> e != null).collect(Collectors.toSet());
+        return new HashSet<Edge>(edges);
     }
 
     @Override

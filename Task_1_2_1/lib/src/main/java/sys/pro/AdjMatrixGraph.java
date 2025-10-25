@@ -1,29 +1,37 @@
 package sys.pro;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
 /** Adjacency matrix implementation of a graph. */
 public class AdjMatrixGraph implements Graph {
-    private boolean[][] repr;
-
-    private AdjMatrixGraph(AdjMatrixGraph g) {
-        repr = new boolean[g.repr.length][];
-        for (int i = 0; i < g.repr.length; ++i) {
-            repr[i] = (g.repr[i] == null) ? null : g.repr[i].clone();
-        }
-    }
+    private ArrayList<Integer> nodes;
+    private ArrayList<ArrayList<Boolean>> repr;
 
     /** Create an empty graph. */
     public AdjMatrixGraph() {
-        repr = new boolean[][] {};
+        nodes = new ArrayList<Integer>();
+        repr = new ArrayList<ArrayList<Boolean>>();
+    }
+
+    /** Copy a graph to adjacency matrix representaion. */
+    public AdjMatrixGraph(Graph g) {
+        this();
+
+        g.nodes().forEach(n -> addNode(n));
+        g.edges().forEach(e -> addEdge(e));
+    }
+
+    private int nodeIndex(Integer node) {
+        return nodes.indexOf(node);
     }
 
     @Override
     public boolean hasNode(Integer node) {
-        return node < repr.length && repr[node] != null;
+        return nodes.contains(node);
     }
 
     @Override
@@ -32,17 +40,9 @@ public class AdjMatrixGraph implements Graph {
             return;
         }
 
-        if (i >= repr.length) {
-            repr = Arrays.copyOf(repr, i + 1);
-            for (int j = 0; j < repr.length; ++j) {
-                if (repr[j] == null) {
-                    continue;
-                }
-                repr[j] = Arrays.copyOf(repr[j], i + 1);
-            }
-        }
-
-        repr[i] = new boolean[repr.length];
+        nodes.add(i);
+        repr.forEach(row -> row.add(false));
+        repr.add(new ArrayList<Boolean>(Collections.nCopies(nodes.size(), false)));
     }
 
     @Override
@@ -51,13 +51,9 @@ public class AdjMatrixGraph implements Graph {
             throw new NoSuchElementException();
         }
 
-        repr[i] = null;
-        for (int j = 0; j < repr.length; ++j) {
-            if (repr[j] == null) {
-                continue;
-            }
-            repr[j][i] = false;
-        }
+        int idx = nodeIndex(i);
+        nodes.remove(idx);
+        repr.forEach(row -> row.remove(idx));
     }
 
     @Override
@@ -66,7 +62,7 @@ public class AdjMatrixGraph implements Graph {
             throw new NoSuchElementException();
         }
 
-        repr[e.from][e.to] = true;
+        repr.get(nodeIndex(e.from)).set(nodeIndex(e.to), true);
     }
 
     @Override
@@ -75,25 +71,18 @@ public class AdjMatrixGraph implements Graph {
             throw new NoSuchElementException();
         }
 
-        repr[e.from][e.to] = false;
-    }
+        int fromIdx = nodeIndex(e.from);
+        int toIdx = nodeIndex(e.to);
+        if (!repr.get(fromIdx).get(toIdx)) {
+            throw new NoSuchElementException();
+        }
 
-    @Override
-    public Graph deepCopy() {
-        return new AdjMatrixGraph(this);
+        repr.get(fromIdx).set(toIdx, false);
     }
 
     @Override
     public Set<Integer> nodes() {
-        var res = new HashSet<Integer>();
-
-        for (int i = 0; i < repr.length; ++i) {
-            if (hasNode(i)) {
-                res.add(i);
-            }
-        }
-
-        return res;
+        return new HashSet<Integer>(nodes);
     }
 
     @Override
@@ -102,12 +91,12 @@ public class AdjMatrixGraph implements Graph {
             throw new NoSuchElementException();
         }
 
-        var row = repr[node];
+        var row = repr.get(nodeIndex(node));
         var res = new HashSet<Integer>();
 
-        for (int i = 0; i < row.length; ++i) {
-            if (row[i]) {
-                res.add(i);
+        for (int i = 0; i < row.size(); ++i) {
+            if (row.get(i)) {
+                res.add(nodes.get(i));
             }
         }
 
