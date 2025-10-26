@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
+import java.lang.IllegalArgumentException;
 
 public class GradeBook {
     private List<Semester> semesters;
@@ -85,10 +86,14 @@ public class GradeBook {
     /**
      * Check whether the student can transfer to state-funded education.
      *
-     * @throw NoSuchElementException the book has less than two semesters in it.
+     * @throws IllegalArgumentException if the book has less than two semesters in it.
      * @return whether the transfer is possible.
      */
     public boolean canTransferToStateFundedEducation() {
+        if (semesters.size() < 2) {
+            throw new IllegalArgumentException();
+        }
+        
         var firstSubjects = semesters.get(semesters.size() - 2).subjects().stream();
         var secondSubjects = semesters.get(semesters.size() - 1).subjects().stream();
         return Stream.concat(firstSubjects, secondSubjects)

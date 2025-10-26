@@ -1,10 +1,12 @@
 package sys.pro;
 
 import java.util.ArrayList;
+import java.lang.IllegalArgumentException;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
@@ -54,6 +56,9 @@ class GradeBookTest {
 
     @Test
     void stateFundedEducation() {
+        var emptyBook = new GradeBook();
+        assertThrows(IllegalArgumentException.class, () -> emptyBook.canTransferToStateFundedEducation());
+        
         var subjects1 = new ArrayList<Subject>();
         subjects1.add(new Subject("ДМТА", ControlType.Exam, true, Grade.A));
         subjects1.add(new Subject("Математический анализ", ControlType.Exam, false, Grade.C));
