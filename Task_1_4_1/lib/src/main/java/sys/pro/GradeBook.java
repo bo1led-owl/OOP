@@ -85,7 +85,7 @@ public class GradeBook {
     /**
      * Check whether the student can transfer to state-funded education.
      *
-     * @throws NoSuchElementException the book has less than two semesters in it.
+     * @throw NoSuchElementException the book has less than two semesters in it.
      * @return whether the transfer is possible.
      */
     public boolean canTransferToStateFundedEducation() {
