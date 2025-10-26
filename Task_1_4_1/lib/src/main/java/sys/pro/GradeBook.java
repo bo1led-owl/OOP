@@ -35,7 +35,7 @@ public class GradeBook {
     /**
      * Check whether advanced scholarship is available in the next semester.
      *
-     * @returns whether it is available or not.
+     * @return whether it is available or not.
      */
     public boolean canGetAdvancedScholarshipNextSemester() {
         return semesters.isEmpty() || semesters.get(semesters.size() - 1).grantsAdvancedScholarship();
@@ -44,7 +44,7 @@ public class GradeBook {
     /**
      * Compute the average grade of the student.
      *
-     * @returns the average.
+     * @return the average.
      */
     public double averageGrade() {
         var amountOfSubjects = semesters
@@ -86,8 +86,7 @@ public class GradeBook {
      * Check whether the student can transfer to state-funded education.
      *
      * @throws NoSuchElementException the book has less than two semesters in it.
-     * @param subject - subject to add.
-     * @returns whether the transfer is possible.
+     * @return whether the transfer is possible.
      */
     public boolean canTransferToStateFundedEducation() {
         var firstSubjects = semesters.get(semesters.size() - 2).subjects().stream();
@@ -100,7 +99,7 @@ public class GradeBook {
     /**
      * Collect all final grades in the book.
      *
-     * @returns a collection of final grades.
+     * @return a collection of final grades.
      */
     public Collection<Grade> getFinalGrades() {
         var grades = new ArrayList<Grade>();
@@ -118,7 +117,7 @@ public class GradeBook {
     /**
      * Check whether the student can acquire an honors diploma.
      *
-     * @returns whether the honors diploma is possible or not.
+     * @return whether the honors diploma is possible or not.
      */
     public boolean canGetHonorsDiploma() {
         var finalGrades = getFinalGrades();

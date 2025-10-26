@@ -20,7 +20,7 @@ public record Semester(List<Subject> subjects) {
     /**
      * Check whether advanced scholarship is available after this semester.
      *
-     * @returns whether it is available or not.
+     * @return whether it is available or not.
      */
     boolean grantsAdvancedScholarship() {
         return subjects.stream().allMatch(s -> s.grade() == Grade.A);
