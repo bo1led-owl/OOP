@@ -1,1 +1,1 @@
-typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"sys.pro","l":"ControlType"},{"p":"sys.pro","l":"Grade"},{"p":"sys.pro","l":"GradeBook"}];updateSearchResults();
+typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"sys.pro","l":"Grade"},{"p":"sys.pro","l":"GradeBook"}];updateSearchResults();
