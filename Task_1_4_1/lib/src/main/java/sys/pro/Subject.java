@@ -1,3 +1,9 @@
 package sys.pro;
 
-public record Subject(String name, ControlType controlType, boolean isFinalGrade, Grade grade) {}
+abstract class Subject {
+    final String name;
+
+    public Subject(String name) {
+        this.name = name;
+    }
+}

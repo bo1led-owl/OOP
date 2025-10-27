@@ -2,10 +2,10 @@ package sys.pro;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
-import java.lang.IllegalArgumentException;
 
 public class GradeBook {
     private List<Semester> semesters;
@@ -39,7 +39,8 @@ public class GradeBook {
      * @return whether it is available or not.
      */
     public boolean canGetAdvancedScholarshipNextSemester() {
-        return semesters.isEmpty() || semesters.get(semesters.size() - 1).grantsAdvancedScholarship();
+        return semesters.isEmpty()
+                || semesters.get(semesters.size() - 1).grantsAdvancedScholarship();
     }
 
     /**
@@ -48,24 +49,13 @@ public class GradeBook {
      * @return the average.
      */
     public double averageGrade() {
-        var amountOfSubjects = semesters
-            .stream()
-            .map(sem -> sem
-                .subjects()
-                .stream()
-                .filter(subj -> subj.controlType() != ControlType.Credit)
-                .count()
-            ).reduce(0L, Long::sum);
+        var amountOfSubjects =
+                semesters.stream().map(sem -> sem.gradedSubjects().size()).reduce(0, Integer::sum);
 
-        var gradesSum = semesters
-            .stream()
-            .flatMap(sem -> sem
-                .subjects()
-                .stream()
-                .filter(subj -> subj.controlType() != ControlType.Credit)
-                .map(subj -> subj.grade().value)
-            )
-            .reduce(0, Integer::sum);
+        var gradesSum =
+                semesters.stream()
+                        .flatMap(sem -> sem.gradedSubjects().stream().map(subj -> subj.grade.value))
+                        .reduce(0, Integer::sum);
 
         return (double) gradesSum / (double) amountOfSubjects;
     }
@@ -93,12 +83,12 @@ public class GradeBook {
         if (semesters.size() < 2) {
             throw new IllegalArgumentException();
         }
-        
-        var firstSubjects = semesters.get(semesters.size() - 2).subjects().stream();
-        var secondSubjects = semesters.get(semesters.size() - 1).subjects().stream();
+
+        var firstSubjects = semesters.get(semesters.size() - 2).gradedSubjects().stream();
+        var secondSubjects = semesters.get(semesters.size() - 1).gradedSubjects().stream();
         return Stream.concat(firstSubjects, secondSubjects)
-                .filter(s -> s.controlType() == ControlType.Exam)
-                .allMatch(s -> s.grade() != Grade.C);
+                .filter(s -> s instanceof Exam)
+                .allMatch(s -> s.grade != Grade.C);
     }
 
     /**
@@ -107,16 +97,15 @@ public class GradeBook {
      * @return a collection of final grades.
      */
     public Collection<Grade> getFinalGrades() {
-        var grades = new ArrayList<Grade>();
+        var grades = new HashMap<String, Grade>();
 
         for (var semester : semesters) {
-            semester.subjects().stream()
-                    .filter(s -> s.isFinalGrade() && s.controlType() != ControlType.Credit)
-                    .map(s -> s.grade())
-                    .forEach(g -> grades.add(g));
+            for (var s : semester.gradedSubjects()) {
+                grades.put(s.name, s.grade);
+            }
         }
 
-        return grades;
+        return grades.values();
     }
 
     /**
@@ -127,12 +116,14 @@ public class GradeBook {
     public boolean canGetHonorsDiploma() {
         var finalGrades = getFinalGrades();
         var countOfAs = finalGrades.stream().filter(g -> g == Grade.A).count();
+
         var qualificationWorkGrade = Optional.<Grade>empty();
         if (!semesters.isEmpty()) {
-            semesters.get(semesters.size() - 1).subjects().stream()
-                    .filter(s -> s.controlType() == ControlType.QualificationWork)
-                    .map(s -> s.grade())
-                    .findFirst();
+            qualificationWorkGrade =
+                    semesters.get(semesters.size() - 1).gradedSubjects().stream()
+                            .filter(s -> s instanceof QualificationWork)
+                            .map(s -> s.grade)
+                            .findFirst();
         }
 
         return (4 * countOfAs >= 3 * finalGrades.size())

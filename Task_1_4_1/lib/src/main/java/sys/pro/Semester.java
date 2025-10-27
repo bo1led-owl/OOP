@@ -2,10 +2,25 @@ package sys.pro;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
-public record Semester(List<Subject> subjects) {
+class Semester {
+    private List<GradedSubject> gradedSubjects;
+
     public Semester() {
-        this(new ArrayList<Subject>());
+        gradedSubjects = new ArrayList<GradedSubject>();
+    }
+
+    public Semester(List<Subject> subjects) {
+        gradedSubjects =
+                subjects.stream()
+                        .filter(s -> s instanceof GradedSubject)
+                        .map(s -> (GradedSubject) s)
+                        .collect(Collectors.toList());
+    }
+
+    public List<GradedSubject> gradedSubjects() {
+        return gradedSubjects;
     }
 
     /**
@@ -13,8 +28,10 @@ public record Semester(List<Subject> subjects) {
      *
      * @param subject - subject to add
      */
-    void addSubject(Subject subject) {
-        subjects.add(subject);
+    public void addSubject(Subject subject) {
+        if (subject instanceof GradedSubject) {
+            gradedSubjects.add((GradedSubject) subject);
+        }
     }
 
     /**
@@ -22,7 +39,7 @@ public record Semester(List<Subject> subjects) {
      *
      * @return whether it is available or not.
      */
-    boolean grantsAdvancedScholarship() {
-        return subjects.stream().allMatch(s -> s.grade() == Grade.A);
+    public boolean grantsAdvancedScholarship() {
+        return gradedSubjects.stream().allMatch(s -> s.grade == Grade.A);
     }
 }
