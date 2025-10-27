@@ -1,5 +1,6 @@
 package sys.pro;
 
+/** Grade descriptor class. */
 public enum Grade {
     C(3),
     B(4),
