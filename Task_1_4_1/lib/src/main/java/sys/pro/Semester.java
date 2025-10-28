@@ -5,22 +5,25 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 class Semester {
-    private List<GradedSubject> gradedSubjects;
+    private List<Subject> subjects;
 
     public Semester() {
-        gradedSubjects = new ArrayList<GradedSubject>();
+        subjects = new ArrayList<Subject>();
     }
 
     public Semester(List<Subject> subjects) {
-        gradedSubjects =
-                subjects.stream()
-                        .filter(s -> s instanceof GradedSubject)
-                        .map(s -> (GradedSubject) s)
-                        .collect(Collectors.toList());
+        this.subjects = subjects;
+    }
+
+    public List<Subject> subjects() {
+        return subjects;
     }
 
     public List<GradedSubject> gradedSubjects() {
-        return gradedSubjects;
+        return subjects.stream()
+                .filter(s -> s instanceof GradedSubject)
+                .map(s -> (GradedSubject) s)
+                .collect(Collectors.toList());
     }
 
     /**
@@ -29,9 +32,7 @@ class Semester {
      * @param subject - subject to add
      */
     public void addSubject(Subject subject) {
-        if (subject instanceof GradedSubject) {
-            gradedSubjects.add((GradedSubject) subject);
-        }
+        subjects.add(subject);
     }
 
     /**
@@ -40,6 +41,6 @@ class Semester {
      * @return whether it is available or not.
      */
     public boolean grantsAdvancedScholarship() {
-        return gradedSubjects.stream().allMatch(s -> s.grade == Grade.A);
+        return gradedSubjects().stream().allMatch(s -> s.grade == Grade.A);
     }
 }
